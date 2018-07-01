@@ -1,5 +1,10 @@
 package pl.lmb.controller;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,22 +12,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import pl.lmb.model.Player;
 
 public class GameController implements Initializable
 {
@@ -32,54 +49,6 @@ public class GameController implements Initializable
 
 	@FXML
 	private GridPane grid;
-
-	@FXML
-	private Button btn1;
-
-	@FXML
-	private Button btn2;
-
-	@FXML
-	private Button btn3;
-
-	@FXML
-	private Button btn6;
-
-	@FXML
-	private Button btn7;
-
-	@FXML
-	private Button btn8;
-
-	@FXML
-	private Button btn9;
-
-	@FXML
-	private Button btn10;
-
-	@FXML
-	private Button btn11;
-
-	@FXML
-	private Button btn4;
-
-	@FXML
-	private Button btn5;
-
-	@FXML
-	private Button btn12;
-
-	@FXML
-	private Button btn13;
-
-	@FXML
-	private Button btn14;
-
-	@FXML
-	private Button btn15;
-
-	@FXML
-	private Button btn16;
 
 	@FXML
 	private AnchorPane topPane;
@@ -93,10 +62,19 @@ public class GameController implements Initializable
 	@FXML
 	private Label ScoreLabel;
 	
+    @FXML
+    private MenuItem rankingItem;
+
+    @FXML
+    private MenuItem aboutItem;
+	
 	private final static Map<Integer, String> colors;
 	private boolean isStarted;
 	private int score;
 	private Label endStatementLabel;
+	private VBox endStmtLayout;
+	
+	private Player[] ranking = new Player[RankingController.MAX_PLAYERS];
 	
 	static
 	{
@@ -118,7 +96,7 @@ public class GameController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		System.out.println("bla ->" + ScoreLabel.getText());
+		initilizeRanking();
 		
 		startButton.addEventFilter(ActionEvent.ACTION, e -> 
 			{
@@ -152,6 +130,28 @@ public class GameController implements Initializable
 				System.out.println("down");
 				stepDown();
 			}
+		});
+		
+		rankingItem.setOnAction(e ->
+		{
+		        try 
+		        {
+		        	FXMLLoader loader = new FXMLLoader(getClass().getResource("/pl/lmb/view/RankingPane.fxml" ));
+
+		        		  Stage stage = new Stage();
+		        		  stage.setScene(new Scene((Pane) loader.load()));
+		        		  
+		            stage.setTitle("Ranking");
+		            
+		            RankingController controller = loader.<RankingController>getController();
+		            controller.initData(ranking);
+		            
+		            stage.show();
+		        }
+		        catch (IOException exc) 
+		        {
+		            exc.printStackTrace();
+		        }
 		});
 		
 	}
@@ -340,25 +340,35 @@ public class GameController implements Initializable
 		}
 		else if (isLoser()) //TODO
 		{
-			text = "Przegrałeś! Chcesz Spróbować ponownie?";
-			FlowPane layout = new FlowPane();
+			text = "You lost! Would you like to try again?";
+			endStmtLayout = new VBox();
 			endStatementLabel = new Label(text);
 			endStatementLabel.setStyle("-fx-text-fill: #FF0000; -fx-font-size: 32;");
-			layout.getChildren().add(endStatementLabel);
 			gamePane.getChildren().remove(grid);
-//				gamePane.getChildren().add(layout);
-			gamePane.setCenter(endStatementLabel);
+			endStmtLayout.getChildren().add(endStatementLabel);
+			
+			if (scoreInTop())
+			{
+				addBestScoreForm(endStmtLayout);
+			}
+			gamePane.setCenter(endStmtLayout);
 			
 		}
 		
 		if (isWinner())
 		{
-			text = "Wygrałeś!!!";
-			FlowPane layout = new FlowPane();
-			endStatementLabel = new Label();
+			text = "Winner!!!";
+			endStmtLayout = new VBox();
+			endStatementLabel = new Label(text);
 			endStatementLabel.setStyle("-fx-text-fill: #09B079; -fx-font-size: 32;");
-			layout.getChildren().add(endStatementLabel);
-			gamePane.setBottom(layout);
+			endStmtLayout.getChildren().add(endStatementLabel);
+			
+			if (scoreInTop())
+			{
+				addBestScoreForm(endStmtLayout); //layout
+			}
+			
+			gamePane.setCenter(endStmtLayout);
 		}
 	}
 	
@@ -498,6 +508,125 @@ public class GameController implements Initializable
 	private void setButtonColor(Button button, int color)
 	{
 		button.setStyle("-fx-background-color: " + colors.get(color));
+	}
+	
+	private void initilizeRanking()
+	{
+		try (Scanner scanner = new Scanner(new File("res/ranking.txt"));)
+		{
+			String[] splittedLine;
+			int i = 0;
+			while (scanner.hasNextLine() && i < RankingController.MAX_PLAYERS)
+			{
+				splittedLine = scanner.nextLine().split("\t");
+				if (splittedLine.length == 2)
+					ranking[i] = new Player(Integer.parseInt(splittedLine[0]), splittedLine[1]);
+				i++;
+			}
+		} 
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private boolean scoreInTop()
+	{
+		for (int i = 0; i < ranking.length; i++)
+		{
+			if (ranking[i] == null || score > ranking[i].getScore())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	private void addBestScoreForm(Pane layout) //Pane layout
+	{
+		TextField nickField = new TextField();
+		Button addScoreToRankingButton = new Button("Dodaj do rankingu");
+		addScoreToRankingButton.setOnAction(e -> 
+		{
+			updateRanking(nickField.getText());
+			gamePane.getChildren().remove(layout);
+			startButton.setDisable(false);
+		});
+		HBox box = new HBox();
+		//box.setPadding(new Insets(20));
+		box.setAlignment(Pos.CENTER);
+		box.getChildren().add(nickField);
+		box.getChildren().add(addScoreToRankingButton);
+		layout.getChildren().add(box);
+//		gamePane.setBottom(nickField); //getChildren().add(nickField);
+//		gamePane.setRight(addScoreToRankingButton);
+	}
+	
+	private void updateRanking(String nickname)
+	{
+		if (nickname.equals("") || nickname == null)
+		{
+			nickname = "unknown_gamer";
+		}
+		
+		Player tmpGamer;
+		
+		for (int i = 0; i < ranking.length; i++)
+		{			
+			if (ranking[i] == null || score > ranking[i].getScore())
+			{
+				tmpGamer = ranking[i];
+				ranking[i] = new Player(score, nickname);
+				
+				if (i < ranking.length - 1)
+				{
+					for (int j = ranking.length - 1; j > i; j--)
+					{
+						ranking[j] = ranking[j - 1];
+					}
+					ranking[i + 1] = tmpGamer;
+				}
+				
+				break;
+			}
+		}
+		updateRankingFile();
+	}
+	
+	private void swap(Player g1, Player g2)
+	{
+		Player tmpGamer = g1;
+		g1 = g2;
+		g2 = tmpGamer;
+	}
+	
+	private void updateRankingFile()
+	{
+		try (
+				BufferedWriter writer = new BufferedWriter(new FileWriter(new File("res/ranking.txt"), false));
+			)
+		{
+			Player gamer;
+			for (int i = 0; i < ranking.length; i++)
+			{
+				if (ranking[i] != null)
+				{
+					gamer = ranking[i];
+					writer.append(String.valueOf(gamer.getScore()));
+					writer.append("\t");
+					writer.append(gamer.getNickname());
+				    if (i < 5)
+				    	writer.append("\n");
+				}
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 }

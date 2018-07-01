@@ -1,0 +1,6 @@
+4296	lmb
+3704	abc
+1560	qwertyuiop
+0	BAC
+0	zxcv
+0	poiu

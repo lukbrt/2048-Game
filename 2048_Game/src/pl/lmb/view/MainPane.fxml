@@ -3,6 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -10,9 +13,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="gamePane" minHeight="525.0" minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.lmb.controller.GameController">
+<BorderPane fx:id="gamePane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.lmb.controller.GameController">
    <center>
-      <GridPane fx:id="grid" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="5.0">
+      <GridPane fx:id="grid" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" vgap="5.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,108 +31,125 @@
          <children>
             <Button fx:id="btn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="1">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="2">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="3">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.rowIndex="1">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn9" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.rowIndex="2">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn11" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn12" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn13" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.rowIndex="3">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn14" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn15" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
             <Button fx:id="btn16" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #828282;" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <font>
-                  <Font size="24.0" />
+                  <Font size="30.0" />
                </font>
             </Button>
          </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
+         <BorderPane.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="15.0" />
+         </BorderPane.margin>
       </GridPane>
    </center>
    <top>
-      <AnchorPane fx:id="topPane" prefHeight="125.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="topPane" prefHeight="140.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="startButton" layoutX="24.0" layoutY="32.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="127.0" style="-fx-background-color: #00892b;" text="START" textFill="WHITE" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="32.0">
+            <Button fx:id="startButton" layoutX="24.0" layoutY="32.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="127.0" style="-fx-background-color: #00892b;" text="START" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="50.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="restartButton" layoutX="167.0" layoutY="32.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="127.0" style="-fx-background-color: fb7900;" text="RESTART" textFill="WHITE" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="167.0" AnchorPane.topAnchor="32.0">
+            <Button fx:id="restartButton" layoutX="167.0" layoutY="32.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="127.0" style="-fx-background-color: fb7900;" text="RESTART" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="167.0" AnchorPane.topAnchor="50.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Label fx:id="ScoreLabel" layoutX="385.0" layoutY="32.0" prefHeight="61.0" prefWidth="193.0" text="Wynik: 0" AnchorPane.bottomAnchor="32.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="32.0">
+            <Label fx:id="ScoreLabel" layoutX="385.0" layoutY="32.0" prefHeight="75.0" prefWidth="259.0" text="Wynik: 0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="50.0">
                <font>
-                  <Font size="30.0" />
+                  <Font size="36.0" />
                </font>
             </Label>
+            <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Options">
+                  <items>
+                    <MenuItem fx:id="rankingItem" mnemonicParsing="false" text="Ranking" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem fx:id="aboutItem" mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+            </MenuBar>
          </children>
       </AnchorPane>
    </top>
